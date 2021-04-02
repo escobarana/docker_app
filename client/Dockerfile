@@ -20,7 +20,7 @@ COPY . /app
 
 EXPOSE 4200
 
-RUN ng serve --build
+RUN npm run build
 
 
 FROM nginx:1.17.1-alpine
