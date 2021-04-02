@@ -2,7 +2,7 @@
 FROM node:12-alpine as build-step 
 
 # Create app directory
-RUN mkidir -p /app
+RUN mkdir -p /app
 WORKDIR /app
 
 # Install app dependencies
