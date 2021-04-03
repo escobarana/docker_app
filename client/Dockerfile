@@ -1,5 +1,5 @@
 # Using the latest LTS version 14 of node available from the Docker Hub
-FROM node:12-alpine as build-step 
+FROM node:carbon
 
 # Create app directory
 RUN mkdir -p /app
@@ -8,7 +8,7 @@ WORKDIR /app
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
-COPY package.json /app
+COPY package*.json .
 
 # RUN npm cache clean
 RUN npm install
@@ -16,13 +16,13 @@ RUN npm install
 # RUN npm ci --only=production
 
 # Bundle app source
-COPY . /app
+COPY . .
 
 EXPOSE 4200
 
 RUN npm run build
 
-FROM nginx:1.17.1-alpine
-COPY --from=build-step app/dist/client /usr/share/nginx/html
+# FROM nginx:1.17.1-alpine
+# COPY --from=build-step app/dist/client /usr/share/nginx/html
 
-CMD ["ng", "serve"]
+CMD ["npm", "start"]
