@@ -8,7 +8,7 @@ services:
 #      - '27017:27017'
 
   api-r:
-    build: client/src/DataMining # directory of the dockerfile
+    build: DataMining # directory of the dockerfile
     image: escobarana/tfg-app:plumber # specify image to build container from
     ports:
       - '7190:7190'    # specify port mapping
