@@ -2,11 +2,6 @@ version: '3.7' # specify docker-compose version (docker -v)
 
 services: 
 
-#  mongo-db:
-#    image: mongo
-#    ports: 
-#      - '27017:27017'
-
   api-r:
     build: DataMining # directory of the dockerfile
     image: escobarana/tfg-app:plumber # specify image to build container from
@@ -23,8 +18,5 @@ services:
     build: . # directory of the dockerfile
     image: escobarana/tfg-app:server # specify image to build container from
     ports:
-      - '3000:3000'    # specify port mapping
-    links:
-      - api-r
-#      - mongo-db    
+      - '3000:3000'    # specify port mapping    
 

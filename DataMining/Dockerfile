@@ -12,18 +12,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   libsodium-dev \
   libxml2-dev
 
+# copy everything from the current directory into the container
+COPY . /app
 
 RUN R -e "install.packages(c('plumber', 'rjson', 'jsonlite', 'tidyverse', 'tm', 'tidyr', 'widyr', 'tidytext', 'dplyr', 'SnowballC', 'stringr', 'textclean'), \
 repos = 'http://cran.us.r-project.org')"
 
+# ENTRYPOINT ["R", "-e", "pr <- plumber::plumb('plumber.R'); pr$run(host='0.0.0.0', port=7190, swagger=TRUE)"]
+
 # open port 7190 to traffic
 EXPOSE 7190
 
-
-# ENTRYPOINT ["R", "-e", "pr <- plumber::plumb('plumber.R'); pr$run(host='0.0.0.0', port=7190, swagger=TRUE)"]
-
-# copy everything from the current directory into the container
-COPY . /app
-
-CMD ["startup.R"]
+CMD ["Rscript","startup.R"]
 # RUN R -e "install.packages('plumber')"
