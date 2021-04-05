@@ -20,10 +20,10 @@ repos = 'http://cran.us.r-project.org')"
 EXPOSE 7190
 
 
-ENTRYPOINT ["R", "-e", "pr <- plumber::plumb('plumber.R'); pr$run(host='0.0.0.0', port=7190, swagger=TRUE)"]
+# ENTRYPOINT ["R", "-e", "pr <- plumber::plumb('plumber.R'); pr$run(host='0.0.0.0', port=7190, swagger=TRUE)"]
 
 # copy everything from the current directory into the container
 COPY . /app
 
-CMD ["/app/plumber.R"]
+CMD ["/app/startup.R"]
 # RUN R -e "install.packages('plumber')"

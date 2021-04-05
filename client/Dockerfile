@@ -26,4 +26,4 @@ EXPOSE 4200
 # COPY --from=build-step app/dist/client /usr/share/nginx/html
 
 # start app
-CMD ng serve --host 0.0.0.0
+CMD ["npm", "start"]
