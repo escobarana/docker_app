@@ -2,7 +2,7 @@
 FROM node:carbon
 
 # Create app directory
-RUN mkdir -p /app
+# RUN mkdir -p /app
 WORKDIR /app
 
 # Install app dependencies
@@ -16,7 +16,7 @@ RUN npm install
 # RUN npm ci --only=production
 
 # Bundle app source
-COPY . .
+COPY . /app
 
 EXPOSE 4200
 
@@ -25,4 +25,5 @@ EXPOSE 4200
 # FROM nginx:1.17.1-alpine
 # COPY --from=build-step app/dist/client /usr/share/nginx/html
 
-CMD ["npm", "start"]
+# start app
+CMD ng serve --host 0.0.0.0

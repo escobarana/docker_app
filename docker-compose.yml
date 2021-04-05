@@ -13,6 +13,12 @@ services:
     ports:
       - '7190:7190'    # specify port mapping
 
+  client:
+    build: client # directory of the dockerfile
+    image: escobarana/tfg-app:client # specify image to build container from
+    ports:
+      - '80:4200'    # specify port mapping
+
   server:
     build: . # directory of the dockerfile
     image: escobarana/tfg-app:server # specify image to build container from
@@ -21,10 +27,4 @@ services:
     links:
       - api-r
 #      - mongo-db    
-
-  client:
-    build: client # directory of the dockerfile
-    image: escobarana/tfg-app:client # specify image to build container from
-    ports:
-      - '4200:4200'    # specify port mapping
 
