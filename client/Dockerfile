@@ -1,5 +1,5 @@
 # Using the latest LTS version 14 of node available from the Docker Hub
-FROM node:carbon
+FROM node:14
 
 # Create app directory
 # RUN mkdir -p /app

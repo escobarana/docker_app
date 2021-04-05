@@ -25,5 +25,5 @@ EXPOSE 7190
 # copy everything from the current directory into the container
 COPY . /app
 
-CMD ["/app/startup.R"]
+CMD ["startup.R"]
 # RUN R -e "install.packages('plumber')"
