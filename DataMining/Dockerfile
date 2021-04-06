@@ -17,7 +17,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # copy everything from the current directory into the container
 COPY . .
 
-RUN R -e "install.packages(c('plumber', 'rjson', 'jsonlite', 'tm', 'tidyr', 'widyr', 'tidytext', 'dplyr', 'SnowballC', 'stringr', 'textclean', 'Rcpp','tidyverse'))"
+RUN R -e "install.packages(c('plumber', 'rjson', 'jsonlite', 'tm', 'tidyr', 'widyr', 'tidytext', 'dplyr', 'SnowballC', 'stringr'))"
+RUN R -e "install.packages('textclean')"
+RUN R -e "install.packages('tidyverse')"
 
 # ENTRYPOINT ["R", "-e", "pr <- plumber::plumb('plumber.R'); pr$run(host='0.0.0.0', port=7190, swagger=TRUE)"]
 COPY . /app
