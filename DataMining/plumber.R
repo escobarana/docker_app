@@ -17,7 +17,7 @@ library(stringr)
 #library(cluster)
 library(textclean)
 #library(qdap)
-library("textcat")
+library(textcat)
 library(tidyverse)
 
 
