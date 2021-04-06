@@ -4,7 +4,6 @@ options(java.parameters = c("-XX:+UseConcMarkSweepGC", "-Xmx8192m"))
 library(plumber)
 library(rjson)
 library(jsonlite)
-library(tidyverse)
 library(tm)
 #library(ggplot2)
 library(tidyr)
@@ -19,6 +18,7 @@ library(stringr)
 library(textclean)
 #library(qdap)
 library("textcat")
+library(tidyverse)
 
 
 #* @apiTitle Data Mining apps
