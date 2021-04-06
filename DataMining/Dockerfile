@@ -17,10 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # copy everything from the current directory into the container
 COPY . .
 
-RUN R -e "uninstall.packages(c('Rcpp','tidyverse'))"
-
-RUN R -e "install.packages(c('Rcpp','tidyverse','plumber', 'rjson', 'jsonlite', 'tm', 'tidyr', 'widyr', 'tidytext', 'dplyr', 'SnowballC', 'stringr', 'textclean'), \
-repos = 'http://cran.us.r-project.org')"
+RUN R -e "install.packages(c('Rcpp','tidyverse','plumber', 'rjson', 'jsonlite', 'tm', 'tidyr', 'widyr', 'tidytext', 'dplyr', 'SnowballC', 'stringr', 'textclean'))"
 
 # ENTRYPOINT ["R", "-e", "pr <- plumber::plumb('plumber.R'); pr$run(host='0.0.0.0', port=7190, swagger=TRUE)"]
 COPY . /app
