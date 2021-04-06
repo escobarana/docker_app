@@ -26,4 +26,4 @@ EXPOSE 4200
 # COPY --from=build-step app/dist/client /usr/share/nginx/html
 
 # start app
-CMD ["npm", "start"]
+CMD ["npm", "start" , "--host", "0.0.0.0"]
