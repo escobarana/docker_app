@@ -19,13 +19,13 @@ COPY . .
 
 RUN R -e "install.packages(c('plumber', 'rjson', 'jsonlite', 'tm', 'tidyr', 'widyr', 'tidytext', 'dplyr', 'SnowballC', 'stringr'), repos='https://cloud.r-project.org/')"
 RUN R -e "install.packages('textclean', repos='https://cloud.r-project.org/')"
-RUN R -e "install.packages('textcat', repos='https://cloud.r-project.org/')"
-RUN R -e "install.packages('tidyverse', repos='https://cloud.r-project.org/')"
+RUN R -e "install.packages('textcat', repos = 'http://cran.us.r-project.org')"
+RUN R -e "install.packages('tidyverse', repos = 'http://cran.us.r-project.org', dependencies=TRUE)"
 
 # ENTRYPOINT ["R", "-e", "pr <- plumber::plumb('plumber.R'); pr$run(host='0.0.0.0', port=7190, swagger=TRUE)"]
 COPY . /app
+
 # open port 7190 to traffic
 EXPOSE 7190
 
 CMD ["Rscript","startup.R"]
-# RUN R -e "install.packages('plumber')"
