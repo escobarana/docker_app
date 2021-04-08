@@ -17,8 +17,8 @@ library(stringr)
 #library(cluster)
 library(textclean)
 #library(qdap)
-library(textcat)
 library(tidyverse)
+library(textcat)
 
 
 #* @apiTitle Data Mining apps

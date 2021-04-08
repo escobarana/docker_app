@@ -1,18 +1,14 @@
-# start from the rocker/r-ver:3.6.1 image
-FROM rocker/r-ver:3.6.1
+# start from the rocker/tidyverse image
+FROM rocker/tidyverse
 
-WORKDIR /app
+# Create directory
+RUN mkdir -p /usr/src/app
+
+# Change directory so that our commands run inside this new directory
+WORKDIR /usr/src/app
 
 # install the linux libraries needed for plumber
-RUN apt-get update && apt-get install -y --no-install-recommends \
-  git-core \
-  liblapack-dev \
-  libpq-dev \
-  libssl-dev \
-  libcurl4-gnutls-dev \
-  curl \
-  libsodium-dev \
-  libxml2-dev
+RUN apt-get update && apt-get install -y
 
 # copy everything from the current directory into the container
 COPY . .
@@ -20,10 +16,10 @@ COPY . .
 RUN R -e "install.packages(c('plumber', 'rjson', 'jsonlite', 'tm', 'tidyr', 'widyr', 'tidytext', 'dplyr', 'SnowballC', 'stringr'), repos='https://cloud.r-project.org/')"
 RUN R -e "install.packages('textclean', repos='https://cloud.r-project.org/')"
 RUN R -e "install.packages('textcat', repos = 'http://cran.us.r-project.org')"
-RUN R -e "install.packages('tidyverse', repos = 'http://cran.us.r-project.org', dependencies=TRUE)"
+# RUN R -e "install.packages('tidyverse', repos = 'http://cran.us.r-project.org', dependencies=TRUE)"
 
 # ENTRYPOINT ["R", "-e", "pr <- plumber::plumb('plumber.R'); pr$run(host='0.0.0.0', port=7190, swagger=TRUE)"]
-COPY . /app
+COPY . /usr/src/app
 
 # open port 7190 to traffic
 EXPOSE 7190
