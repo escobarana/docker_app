@@ -70,7 +70,7 @@ app.use('/api', routesRouter); // Add users routes to middleware chain.
 
 // Frinedly and optimized URLs -- avoiding errors when refreshing the page
 app.get('*', function(req, res, next){
-  res.sendFile(path.resolve('client/index.html'));
+  res.sendFile(path.resolve('dist/client/index.html'));
 });
 
 /// GETTING APPS ///
