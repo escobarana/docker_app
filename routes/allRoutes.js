@@ -97,7 +97,7 @@ router.delete('/delete/rem/:app_appId', md_auth.ensureAuth, app_controller.delet
 /// FORM ROUTES ///
 
 // GET request to return forms.
-router.get('/forms', md_auth.ensureAuth, form_controller.getForms);
+router.get('/patient/forms', md_auth.ensureAuth, form_controller.getForms);
 
 // POST request to add a new form.
 router.post('/newform', form_controller.createForm);
