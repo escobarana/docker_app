@@ -19,28 +19,28 @@ router.post('/newUser', user_controller.user_create_post);
 router.post('/login', user_controller.user_login);
 
 // PUT request to update User.
-router.put('/updateUser/:user_email',  md_auth.ensureAuth, user_controller.user_update);
+router.put('/update/:user_email',  md_auth.ensureAuth, user_controller.user_update);
 
 // DELETE request to delete User.
-router.delete('/deleteUser/:user_email', md_auth.ensureAuth,  user_controller.user_delete);
+router.delete('/delete/:user_email', md_auth.ensureAuth,  user_controller.user_delete);
 
 // GET request for list all Users.
 router.get('/allUsers', md_auth.ensureAuth, user_controller.user_list); 
 
 // GET request to get a user object.
-router.get('/allUsers/:user_email', md_auth.ensureAuth, user_controller.get_user); 
+router.get('/:user_email', md_auth.ensureAuth, user_controller.get_user); 
 
 // PUT request to update list_recommend apps
-router.put('/update_recommend/:user_email', md_auth.ensureAuth, user_controller.user_update_recommend);
+router.put('/updreco/:user_email', md_auth.ensureAuth, user_controller.user_update_recommend);
 
 // PUT request to update list_removed apps
-router.put('/update_removed/:user_email', md_auth.ensureAuth, user_controller.user_update_removed);
+router.put('/updremo/:user_email', md_auth.ensureAuth, user_controller.user_update_removed);
 
 // PUT request to update list_assigned apps
-router.put('/update_assigned/:user_email', md_auth.ensureAuth, user_controller.user_update_assigned);
+router.put('/updass/:user_email', md_auth.ensureAuth, user_controller.user_update_assigned);
 
 // PUT request to delete an app from list_assigned from a User
-router.put('/remove_assigned/:user_email', md_auth.ensureAuth, user_controller.user_remove_assigned);
+router.put('/remass/:user_email', md_auth.ensureAuth, user_controller.user_remove_assigned);
 
 
 /// APP ROUTES ///
@@ -64,7 +64,7 @@ router.get('/apps/review/accept', md_auth.ensureAuth, app_controller.getReviewAc
 router.post('/apps_review_accept', md_auth.ensureAuth, app_controller.post_apps_review_accept);
 
 // DELETE request to remove app from the review accept list
-router.delete('/deleteApp/apps_review_accept/:app_appId', md_auth.ensureAuth, app_controller.delete_review_accept);
+router.delete('/delete/revacc/:app_appId', md_auth.ensureAuth, app_controller.delete_review_accept);
 
 // GET request to return reviewed removed apps.
 router.get('/apps/review/remove', md_auth.ensureAuth, app_controller.getReviewRemove);
@@ -73,7 +73,7 @@ router.get('/apps/review/remove', md_auth.ensureAuth, app_controller.getReviewRe
 router.post('/apps_review_remove', md_auth.ensureAuth, app_controller.post_apps_review_remove);
 
 // DELETE request to remove app from the review remove list
-router.delete('/deleteApp/apps_review_remove/:app_appId', md_auth.ensureAuth, app_controller.delete_review_remove);
+router.delete('/delete/revrem/:app_appId', md_auth.ensureAuth, app_controller.delete_review_remove);
 
 // GET request to return final accepted apps.
 router.get('/apps/apps_accepted', md_auth.ensureAuth, app_controller.getFinalAccept);
@@ -82,7 +82,7 @@ router.get('/apps/apps_accepted', md_auth.ensureAuth, app_controller.getFinalAcc
 router.post('/apps_accepted', md_auth.ensureAuth, app_controller.post_apps_accepted);
 
 // DELETE request to remove app from the final accept list
-router.delete('/deleteApp/apps_accepted/:app_appId', md_auth.ensureAuth, app_controller.delete_final_accept);
+router.delete('/delete/acc/:app_appId', md_auth.ensureAuth, app_controller.delete_final_accept);
 
 // GET request to return final removed apps.
 router.get('/apps/apps_removed', md_auth.ensureAuth, app_controller.getFinalRemove);
@@ -91,7 +91,7 @@ router.get('/apps/apps_removed', md_auth.ensureAuth, app_controller.getFinalRemo
 router.post('/apps_removed', md_auth.ensureAuth, app_controller.post_apps_removed);
 
 // DELETE request to remove app from the final remove list
-router.delete('/deleteApp/apps_removed/:app_appId', md_auth.ensureAuth, app_controller.delete_final_remove);
+router.delete('/delete/rem/:app_appId', md_auth.ensureAuth, app_controller.delete_final_remove);
 
 
 /// FORM ROUTES ///
