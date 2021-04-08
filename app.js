@@ -6,7 +6,6 @@ var logger = require('morgan');
 //Import the mongoose module
 var mongoose = require('mongoose');
 var cors = require('cors');
-var bodyParser = require('body-parser')
 
 var routesRouter = require('./routes/allRoutes');
 var compression = require('compression'); // to compress the routes at the end - production
@@ -21,10 +20,8 @@ app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
-// parse application/json
-app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
-//app.use(cookieParser());
+app.use(cookieParser());
 app.use(compression()); //Compress all routes -- for the end - production
 app.use(helmet({
   referrerPolicy: { policy: "no-referrer" },
