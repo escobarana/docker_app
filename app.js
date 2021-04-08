@@ -23,7 +23,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(compression()); //Compress all routes -- for the end - production
-app.use(helmet());
+app.use(helmet({
+  referrerPolicy: { policy: "no-referrer" },
+  contentSecurityPolicy: false,
+}));
 
 /// Set up default mongoose connection ///
 var mongoDB = 'mongodb://156.35.163.172:27017/recommendersystemdb'
@@ -62,7 +65,7 @@ app.use(cors());
 
 
 /// Routes ///
-//app.use('/', express.static('client', { redirect: false }));
+//app.use('/', express.static('dist/client', { redirect: false }));
 app.use('/api', routesRouter); // Add users routes to middleware chain.
 
 // Frinedly and optimized URLs -- avoiding errors when refreshing the page

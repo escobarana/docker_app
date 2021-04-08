@@ -17,8 +17,8 @@ RUN npm install
 # Get all the code needed to run the app
 COPY . .
 
-# Run the angular in product
-RUN npm run build
+# Run the angular in production
+RUN npm run build --prod
 
 # EXPOSE 4200
 # ENV PORT 4200
@@ -28,4 +28,4 @@ FROM nginx:1.17.1-alpine
 
 #copy dist content to html nginx folder, config nginx to point in index.html
 COPY --from=node-angular-cli /usr/src/app/dist/client /usr/share/nginx/html
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+# COPY ./nginx.conf /etc/nginx/conf.d/default.conf
