@@ -19,5 +19,5 @@ services:
     build: . # directory of the dockerfile
     image: escobarana/tfg-app:server # specify image to build container from
     ports:
-      - '3000:3000'    # specify port mapping    
+      - '80:3000'    # specify port mapping    
 
