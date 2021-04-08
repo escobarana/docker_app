@@ -40,7 +40,7 @@ router.put('/updremo/:user_email', md_auth.ensureAuth, user_controller.user_upda
 router.put('/updass/:user_email', md_auth.ensureAuth, user_controller.user_update_assigned);
 
 // PUT request to delete an app from list_assigned from a User
-router.put('/remass/:user_email', md_auth.ensureAuth, user_controller.user_remove_assigned);
+router.put('/remoass/:user_email', md_auth.ensureAuth, user_controller.user_remove_assigned);
 
 
 /// APP ROUTES ///
