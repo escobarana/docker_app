@@ -5,7 +5,7 @@ var async = require('async');
 exports.getForms = async (req, res) => {
     console.log("Starting GET form ...");
     try{
-        var result = await Form.find().exec();
+        var result = await Form.find();
         res.status(200).send(result);
 
     }catch(error){
