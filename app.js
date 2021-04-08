@@ -65,13 +65,13 @@ app.use(cors());
 
 
 /// Routes ///
-//app.use('/', express.static('dist/client', { redirect: false }));
+app.use('/', express.static('dist/client', { redirect: false }));
 app.use('/api', routesRouter); // Add users routes to middleware chain.
 
 // Frinedly and optimized URLs -- avoiding errors when refreshing the page
-/*app.get('*', function(req, res, next){
+app.get('*', function(req, res, next){
   res.sendFile(path.resolve('client/index.html'));
-});*/
+});
 
 /// GETTING APPS ///
 

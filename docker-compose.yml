@@ -8,12 +8,12 @@ services:
     ports:
       - '7190:7190'    # specify port mapping
 
-  client:
-    hostname: 156.35.163.172
-    build: client # directory of the dockerfile
-    image: escobarana/tfg-app:client # specify image to build container from
-    ports:
-      - "8181:80" # specify port forewarding
+  #client:
+  #  hostname: 156.35.163.172
+  #  build: client # directory of the dockerfile
+  #  image: escobarana/tfg-app:client # specify image to build container from
+  #  ports:
+  #    - "8181:80" # specify port forewarding
 
   server:
     build: . # directory of the dockerfile
