@@ -1,5 +1,5 @@
 # start from the rocker/tidyverse image
-FROM rocker/tidyverse
+FROM rocker/r-ver:3.5.0
 
 # install the linux libraries needed for plumber
 RUN apt-get update && apt-get install -y \
@@ -16,7 +16,7 @@ WORKDIR /usr/src/app
 # open port 7190 to traffic
 EXPOSE 7190
 
-RUN R -e "install.packages(c('plumber', 'textclean', 'rjson', 'jsonlite', 'tm', 'tidyr', 'widyr', 'tidytext', 'dplyr', 'SnowballC', 'stringr'), repos='https://cloud.r-project.org/')"
+RUN R -e "install.packages(c('textclean', 'rjson', 'jsonlite', 'tm', 'tidyr', 'widyr', 'tidytext', 'dplyr', 'SnowballC', 'stringr'), repos='https://cloud.r-project.org/')"
 RUN R -e "install.packages(c('textcat', 'plumber'), repos = 'https://cran.r-project.org/')"
 
 # ENTRYPOINT ["R", "-e", "pr <- plumber::plumb('plumber.R'); pr$run(host='0.0.0.0', port=7190, swagger=TRUE)"]
