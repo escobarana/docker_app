@@ -1,6 +1,19 @@
 #Para que no salte OutOfMemoryError
 options(java.parameters = c("-XX:+UseConcMarkSweepGC", "-Xmx8192m"))
 
+install.packages(rjson)
+install.packages(jsonlite)
+install.packages(tm)
+install.packages(tidyr)
+install.packages(widyr)
+install.packages(tidytext)
+install.packages(dplyr)
+install.packages(SnowballC)
+install.packages(stringr)
+install.packages(textclean)
+install.packages(tidyverse)
+install.packages(textcat)
+
 library(plumber)
 library(rjson)
 library(jsonlite)

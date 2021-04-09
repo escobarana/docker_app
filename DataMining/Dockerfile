@@ -16,11 +16,6 @@ WORKDIR /usr/src/app
 # open port 7190 to traffic
 EXPOSE 7190
 
-RUN R -e "install.packages('plumber')"
-RUN R -e "install.packages(c('textclean', 'rjson', 'jsonlite', 'tm', 'tidyr', 'widyr', 'tidytext', 'dplyr', 'SnowballC', 'stringr'))"
-RUN R -e "install.packages('textcat', repos = 'https://cran.r-project.org/')"
-
-
 # ENTRYPOINT ["R", "-e", "pr <- plumber::plumb('plumber.R'); pr$run(host='0.0.0.0', port=7190, swagger=TRUE)"]
 
 CMD ["Rscript","startup.R"]
