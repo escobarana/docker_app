@@ -17,7 +17,7 @@ WORKDIR /usr/src/app
 EXPOSE 7190
 
 RUN R -e "install.packages('plumber')"
-RUN R -e "install.packages(c('textclean', 'rjson', 'jsonlite', 'tm', 'tidyr', 'widyr', 'tidytext', 'dplyr', 'SnowballC', 'stringr'), repos='https://cloud.r-project.org/')"
+RUN R -e "install.packages(c('textclean', 'rjson', 'jsonlite', 'tm', 'tidyr', 'widyr', 'tidytext', 'dplyr', 'SnowballC', 'stringr'))"
 RUN R -e "install.packages('textcat', repos = 'https://cran.r-project.org/')"
 
 
