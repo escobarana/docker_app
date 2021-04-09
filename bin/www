@@ -6,6 +6,10 @@
 
 var app = require('../app');
 var debug = require('debug')('express-recommendersystem-tfg:server');
+
+// Monkey patch before requiring http for the first time.
+process.binding('http_parser').HTTPParser = require('http-parser-js').HTTPParser;
+
 var http = require('http');
 // var https = require('https');
 
