@@ -1,4 +1,4 @@
-install.packages(plumber)
+install.packages("plumber")
 library(plumber)
 
 pr <- plumb("plumber.R")
