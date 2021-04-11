@@ -43,6 +43,7 @@ var db = mongoose.connection;
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error'));
 
+app.use(cors());
 
 // HEADERS AND CORS CONFIG
 app.use((req, res, next) => {
@@ -61,7 +62,13 @@ app.use((req, res, next) => {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
 };*/
 
-app.use(cors());
+/*app.all('/*', function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://156.35.163.172, http://apps4h.uniovi.es");
+  res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+  res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+  next();
+});*/
 
 
 /// Routes ///

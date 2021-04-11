@@ -102,15 +102,15 @@ exports.user_list = async (req, res) => {
 };
 
 // Returns a specific object.
-exports.get_user = async (req, res) => {
-  var userEmail = req.params.user_email;
+/*exports.get_user = async (req, res) => {
+  var userEmail = req.body.user_email;
   try{
     var result = await User.findOne({email: userEmail}).exec();
     res.status(200).send(result);
   }catch(error){
     res.status(500).send({ message: 'Error in the petition' });
   }
-};
+};*/
 
 exports.user_update_recommend = async (req, res, next) => { // list_recommend
   User.findOneAndUpdate(
