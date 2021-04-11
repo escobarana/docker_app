@@ -28,7 +28,7 @@ router.delete('/delete/:user_email', md_auth.ensureAuth,  user_controller.user_d
 router.get('/allUsers', md_auth.ensureAuth, user_controller.user_list); 
 
 // GET request to get a user object.
-// router.get('/get_user', md_auth.ensureAuth, user_controller.get_user); 
+router.get('/:user_email', md_auth.ensureAuth, user_controller.get_user); 
 
 // PUT request to update list_recommend apps
 router.put('/updreco/:user_email', md_auth.ensureAuth, user_controller.user_update_recommend);
