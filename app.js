@@ -3,16 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-//Import the mongoose module
-var mongoose = require('mongoose');
+var mongoose = require('mongoose');                 //Import the mongoose module
 var cors = require('cors');
 
 var routesRouter = require('./routes/allRoutes');
-var compression = require('compression'); // to compress the routes at the end - production
-var helmet = require('helmet'); // to protect against well known vulnerabilities - npm install helmet
+var compression = require('compression');           // to compress the routes at the end - production
+var helmet = require('helmet');                     // to protect against well known vulnerabilities - npm install helmet
 
 
-var app = express(); // object to run the server
+var app = express();                                // object to run the server
 app.disable('etag');
 /// view engine setup ///
 app.set('views', path.join(__dirname, 'views'));
@@ -22,7 +21,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(compression()); //Compress all routes -- for the end - production
+app.use(compression());                               //Compress all routes -- for the end - production
 app.use(helmet({
   referrerPolicy: { policy: "no-referrer" },
   contentSecurityPolicy: false,
@@ -30,15 +29,12 @@ app.use(helmet({
 
 /// Set up default mongoose connection ///
 var mongoDB = 'mongodb://156.35.163.172:27017/recommendersystemdb'
-// var mongoDB = 'mongodb://mongo-db:27017/recommendersystemdb'
 
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
         .then( () => { console.log('Successfully connected to the database.') }) 
         .catch(err => console.log(err));
 
-//Get the default connection
-var db = mongoose.connection;
-
+var db = mongoose.connection;                          //Get the default connection
 
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error'));
@@ -55,54 +51,31 @@ app.use((req, res, next) => {
   next();
 });
 
-
-/// GETTING THE CLIENT - ANGULAR ///
-/*var corsOptions = {
-  origin: 'http://localhost:4200',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
-};*/
-
-/*app.all('/*', function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://156.35.163.172, http://apps4h.uniovi.es");
-  res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-  res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
-  next();
-});*/
-
-
 /// Routes ///
 app.use('/', express.static('dist/client', { redirect: false }));
 app.use('/api', routesRouter); // Add users routes to middleware chain.
 
-// Frinedly and optimized URLs -- avoiding errors when refreshing the page
 app.get('*', function(req, res, next){
-  res.sendFile(path.resolve('dist/client/index.html'));
+  res.sendFile(path.resolve('dist/client/index.html')); // Friendly and optimized URLs -- avoiding errors when refreshing the page
 });
+
 
 /// GETTING APPS ///
 
-var http = require('http');
-var https = require('https');
-http.globalAgent.maxSockets = 1;
-https.globalAgent.maxSockets = 1;
+var playstore   = require('./js/apiGoogle');            // API Google Play Store
+var appStore    = require('./js/apiApple');             // API Apple Store
+var r           = require('./js/apiR');                 // API R
 
-// API Google Play Store
-var playstore   = require('./js/apiGoogle');
-// API Apple Store
-var appStore    = require('./js/apiApple');
-// API R
-var r           = require('./js/apiR');
 const { Console } = require('console');
 
-var port_plumber = '7190';
+var port_plumber = '7190';                              // R port
 
 var keywords = ['physical activity', 'sedentary behaviour', 'colorectal neoplasms' ,'health exercise'];
 
 var listGoogle = [];
 var listApple = [];
 
-app.route('/api/apps/google/raw').get((req, res) => { // funciona
+app.route('/api/apps/google/raw').get((req, res) => {
   req.setTimeout(600000); 
   var appsGoogle = playstore.getApps();
   console.log("-----Buscando las apps - GOOGLE");
@@ -115,14 +88,14 @@ app.route('/api/apps/google/raw').get((req, res) => { // funciona
   })
 });
 
-app.route('/api/apps/google/descriptionApps').get((req, res) => { // funciona
+app.route('/api/apps/google/descriptionApps').get((req, res) => {
   req.setTimeout(600000);
   console.log("-----Buscando las apps sin descripciones - GOOGLE");
   var appsGoogle = playstore.getDescriptions(listGoogle);
   appsGoogle.then(function(result_apps_google) {
       console.log("-----Hechas las apps sin descripciones - GOOGLE");
       listGoogle = result_apps_google;
-      listGoogle = listGoogle.filter((arr, index, self) => //elimina los duplicados
+      listGoogle = listGoogle.filter((arr, index, self) => // Delete duplicates
       index === self.findIndex((t) => (t.appId === arr.appId)));
       console.log("TAMAÑO GOOGLE: " + listGoogle.length);
       res.send(listGoogle);
@@ -131,7 +104,7 @@ app.route('/api/apps/google/descriptionApps').get((req, res) => { // funciona
   })
 });
 
-app.route('/api/apps/google/keywords').get((req, res) => { // funciona
+app.route('/api/apps/google/keywords').get((req, res) => { 
   req.setTimeout(600000);
   console.log("-----Buscando las apps con keywords - GOOGLE");
   const promises = []
@@ -156,7 +129,7 @@ app.route('/api/apps/google/keywords').get((req, res) => { // funciona
   })
 });
 
-app.route('/api/apps/apple/raw').get((req, res) => { // funciona
+app.route('/api/apps/apple/raw').get((req, res) => { 
   req.setTimeout(600000);
   var appsApple = appStore.getApps();
   console.log("-----Buscando las apps - APPLE");
@@ -171,14 +144,14 @@ app.route('/api/apps/apple/raw').get((req, res) => { // funciona
   })
 });
 
-app.route('/api/apps/apple/descriptionApps').get((req, res) => { // funciona
+app.route('/api/apps/apple/descriptionApps').get((req, res) => { 
   req.setTimeout(600000);
   console.log("-----Buscando las apps sin descripciones - APPLE");
   var appsApple = appStore.getDescriptions(listApple);
   appsApple.then(function(result_apps) {
       console.log("-----Hechas las apps sin descripciones - APPLE");
       listApple = result_apps;
-      listApple = listApple.filter((arr, index, self) => //elimina los duplicados
+      listApple = listApple.filter((arr, index, self) => // Delete duplicates
           index === self.findIndex((t) => (t.appId === arr.appId)));
       console.log("TAMAÑO APPLE: " + listApple.length);
 
@@ -186,7 +159,7 @@ app.route('/api/apps/apple/descriptionApps').get((req, res) => { // funciona
       allApps = allApps.filter(function (el) {
           return el != null;
       });
-      app.route('/api/bothStores').get((req, res) => { // falla
+      app.route('/api/bothStores').get((req, res) => { 
           res.send(allApps);
       }, function(err) {
         console.log(err);
@@ -200,7 +173,7 @@ app.route('/api/apps/apple/descriptionApps').get((req, res) => { // funciona
   })
 });
 
-app.route('/api/apps/apple/keywords').get((req, res) => { // funciona
+app.route('/api/apps/apple/keywords').get((req, res) => {
   req.setTimeout(600000);
   console.log("-----Buscando las apps con keywords - APPLE");
   const promises = []
@@ -219,7 +192,7 @@ app.route('/api/apps/apple/keywords').get((req, res) => { // funciona
       applications.forEach(p => 
           listApple.push(p) 
       )
-      listApple = listApple.filter((arr, index, self) => //elimina los duplicados
+      listApple = listApple.filter((arr, index, self) => // Delete duplicates
           index === self.findIndex((t) => (t.appId === arr.appId)));
       res.send(listApple);
   }, function(err) {
@@ -231,7 +204,6 @@ app.route('/api/apps/listApps').get((req, res) => {
   req.setTimeout(600000);
   console.log("Sending both stores to R");
   var url = 'http://localhost:' + port_plumber + '/dataMining?url=' + 'http:%2F%2Flocalhost:3000%2Fapi%2FbothStores' + '&valueK=' + req.query.valueK;
-  // var url = 'http://rstudio:' + port_plumber + '/dataMining?url=' + 'http:%2F%2Frstudio:3000%2Fapi%2FbothStores' + '&valueK=' + req.query.valueK;
   return r.getAppsFromR(url).then(values => { 
             console.log(values); 
             res.send(values);
@@ -243,12 +215,6 @@ app.route('/api/apps/listApps').get((req, res) => {
 });
 
 /// END GETTING APPS ///
-
-
-// Friendly and optimized URLs -- avoiding errors when refreshing the page
-/*app.get('*', function(req, res, next){
-    res.sendFile(path.resolve('client/index.html'));
-  });*/
 
 
 /// ERROR HANDLERS ///

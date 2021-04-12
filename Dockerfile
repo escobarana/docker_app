@@ -1,4 +1,4 @@
-# Using the latest LTS version 14 of node available from the Docker Hub
+# Using the latest LTS version 14 of node available from the Docker Hub (alpine generates a lower size image)
 FROM node:14-alpine 
 
 # Create a directory where our app will be placed
@@ -8,12 +8,11 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Copy dependency definitions
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
 COPY package.json /usr/src/app
 
 # Install dependecies
 RUN npm install
+
 # If you are building your code for production
 # RUN npm ci --only=production
 
@@ -25,9 +24,3 @@ EXPOSE 3000
 
 # Serve the app
 CMD [ "npm", "start" ]
-
-#FROM node:carbon-alpine
-#WORKDIR /app
-
-# Stage 2 build for creating smaller image
-#COPY --from=builder /app .

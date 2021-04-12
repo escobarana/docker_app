@@ -1,7 +1,7 @@
-# start from the r-ver:3.5.0 image
+# Start from the rocker/r-ver:3.5.0 image
 FROM rocker/r-ver:3.5.0
 
-# install the linux libraries needed for plumber
+# Install the linux libraries needed for plumber
 RUN apt-get update && apt-get install -y \
     libssl-dev \
     libcurl4-gnutls-dev
@@ -9,13 +9,14 @@ RUN apt-get update && apt-get install -y \
 # Create directory
 RUN mkdir -p /usr/src/app
 
-# copy everything from the current directory into the container
+# Copy everything from the current directory into the container
 COPY . /usr/src/app
+
+# Specify working directory
 WORKDIR /usr/src/app
 
-# open port 7190 to traffic
+# Open port 7190 to traffic
 EXPOSE 7190
 
-# ENTRYPOINT ["R", "-e", "pr <- plumber::plumb('plumber.R'); pr$run(host='0.0.0.0', port=7190, swagger=TRUE)"]
-
+# Start the script
 CMD ["Rscript","startup.R"]
