@@ -11,7 +11,7 @@ var https = require('https');
 var fs = require('fs');
 
 /**
- * Configuring OpenSSL self-signedn certificates
+ * Configuring OpenSSL self-signed certificate
  */
 
 const options = {
@@ -25,13 +25,13 @@ const options = {
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-app.set(options);
+// app.set(options);
 
 /**
  * Create HTTPS server.
  */
 
-var server = https.createServer(app, function (req, res) {
+var server = https.createServer(options, function (req, res) {
   res.send('secure!');
 });
 
