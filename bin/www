@@ -25,21 +25,19 @@ const options = {
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-// app.set(options);
 
 /**
- * Create HTTPS server.
+ * Create HTTP and HTTPS servers.
  */
 
-var server = https.createServer(options, function (req, res) {
-  res.send('secure!');
-});
+http.createServer(app);
+var server = https.createServer(options, app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
- server.listen(port, ()=> {
+server.listen(port, ()=> {
   console.log('Express Server listening on port: ' + port)
 });
 server.on('error', onError);
@@ -49,10 +47,11 @@ server.on('listening', onListening);
  * Redirect from HTTP port 80 to HTTPS
  */ 
 
-var http = require('http');
-http.createServer(app, function (req, res) {
-    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
-    res.end();
+app.use((req, res, next) => {
+  if(req.protocol === 'http'){
+    res.redirect(301, `https://${req.headers.host}${req.url}`);
+  }
+  next();
 }).listen(80);
 
 /**
