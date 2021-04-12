@@ -15,8 +15,8 @@ var fs = require('fs');
  */
 
 const options = {
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
+  key: fs.readFileSync('bin\key.pem'),
+  cert: fs.readFileSync('bin\cert.pem')
 };
 
 /**
@@ -50,7 +50,7 @@ server.on('listening', onListening);
  */ 
 
 var http = require('http');
-http.createServer(function (req, res) {
+http.createServer(app, function (req, res) {
     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
     res.end();
 }).listen(80);
