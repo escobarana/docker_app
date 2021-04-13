@@ -15,7 +15,7 @@ exports.getSystemAccept = async (req, res) => {
     }catch(error){
         res.status(500).send(error);
     }
-};
+}, {rejectUnauthorized: false};
 
 exports.post_system_apps_accept = async (req, res) => {
     try{
@@ -42,7 +42,7 @@ exports.post_system_apps_accept = async (req, res) => {
         res.status(500).send(err);
     }
 
-};
+}, {rejectUnauthorized: false};
 
 // Display list of removed apps by the system.
 exports.getSystemRemove = async (req, res) => {
@@ -52,7 +52,7 @@ exports.getSystemRemove = async (req, res) => {
     }catch(error){
         res.status(500).send(error);
     }
-};
+}, {rejectUnauthorized: false};
 
 exports.post_system_apps_remove = async (req, res) => {
     try{
@@ -77,7 +77,7 @@ exports.post_system_apps_remove = async (req, res) => {
         res.status(500).send(err);
     }
     
-};
+}, {rejectUnauthorized: false};
 
 // Display list of reviewed accepted apps.
 exports.getReviewAccept = async (req, res) => {
@@ -87,7 +87,7 @@ exports.getReviewAccept = async (req, res) => {
     }catch(error){
         res.status(500).send(error);
     }
-};
+}, {rejectUnauthorized: false};
 
 exports.post_apps_review_accept = async (req, res) => {
     let app = new AppRA({
@@ -107,17 +107,17 @@ exports.post_apps_review_accept = async (req, res) => {
         }else{
             res.status(200).send({app: appStored});
         }}
-    });
-};
+    }, {rejectUnauthorized: false});
+}, {rejectUnauthorized: false};
 
 exports.delete_review_accept = async (req, res) => {
     try{
-        var result = AppRA.findOneAndDelete({appId: req.params.app_appId}, {useFindAndModify: false}).exec();
+        var result = AppRA.findOneAndDelete({appId: req.params.app_appId}, {useFindAndModify: false, rejectUnauthorized: false}).exec();
         res.status(200).send(result);
     }catch(error){
         res.status(500).send(error);
     }
-};
+}, {rejectUnauthorized: false};
 
 // Display list of reviewed removed apps.
 exports.getReviewRemove = async (req, res) => {
@@ -147,17 +147,17 @@ exports.post_apps_review_remove = async (req, res) => {
         }else{
             res.status(200).send({app: appStored});
         }}
-    });
-};
+    }, {rejectUnauthorized: false});
+}, {rejectUnauthorized: false};
 
 exports.delete_review_remove = async(req, res)=>{
     try{
-        var result = await AppRR.findOneAndDelete({appId: req.params.app_appId}, {useFindAndModify: false}).exec();
+        var result = await AppRR.findOneAndDelete({appId: req.params.app_appId}, {useFindAndModify: false, rejectUnauthorized:false}).exec();
         res.status(200).send(result);
     }catch(error){
         res.status(500).send(error);
     }
-};
+}, {rejectUnauthorized: false};
 
 // Display list of final accepted apps.
 exports.getFinalAccept = async (req, res) => {
@@ -167,7 +167,7 @@ exports.getFinalAccept = async (req, res) => {
     }catch(error){
         res.status(500).send(error);
     }
-};
+}, {rejectUnauthorized: false};
 
 exports.post_apps_accepted = async (req, res) => {
     try{
@@ -178,16 +178,16 @@ exports.post_apps_accepted = async (req, res) => {
         res.status(500).send(err);
     }
     
-};
+}, {rejectUnauthorized: false};
 
 exports.delete_final_accept = async(req, res)=>{
     try{
-        var result = await AppFA.findOneAndDelete({appId: req.params.app_appId}, {useFindAndModify: false}).exec();
+        var result = await AppFA.findOneAndDelete({appId: req.params.app_appId}, {useFindAndModify: false, rejectUnauthorized: false}).exec();
         res.status(200).send(result);
     }catch(error){
         res.status(500).send(error);
     }
-};
+}, {rejectUnauthorized: false};
 
 // Display list of final removed apps.
 exports.getFinalRemove = async (req, res) => {
@@ -197,7 +197,7 @@ exports.getFinalRemove = async (req, res) => {
     }catch(error){
         res.status(500).send(error);
     }
-};
+}, {rejectUnauthorized: false};
 
 exports.post_apps_removed = async (req, res) => {
     try{
@@ -207,13 +207,13 @@ exports.post_apps_removed = async (req, res) => {
     }catch(err){
         res.status(500).send(err);
     }
-};
+}, {rejectUnauthorized: false};
 
 exports.delete_final_remove = async(req, res)=>{
     try{
-        var result = await AppFR.findOneAndDelete({appId: req.params.app_appId}, {useFindAndModify: false}).exec();
+        var result = await AppFR.findOneAndDelete({appId: req.params.app_appId}, {useFindAndModify: false, rejectUnauthorized: false}).exec();
         res.status(200).send(result);
     }catch(error){
         res.status(500).send(error);
     }
-};
+}, {rejectUnauthorized: false};

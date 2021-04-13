@@ -6,7 +6,7 @@ var async = require('async');
 // register users
 exports.user_create_post = async (req, res) =>{ 
   // Check if this user already exists
-  let user = await User.findOne({ email: req.body.email }).exec();
+  let user = await User.findOne({ email: req.body.email }, {rejectUnauthorized: false}).exec();
   if (user !== null) {
       return res.status(400).send('That user already exists!');
   } else {
@@ -30,10 +30,10 @@ exports.user_create_post = async (req, res) =>{
             res.status(200).send({user: userStored});
           }
         }
-      });   
+      }, {rejectUnauthorized: false});   
     });
   }  
-};
+}, {rejectUnauthorized: false};
 
 // login users
 exports.user_login = async(req, res) => {
@@ -41,7 +41,7 @@ exports.user_login = async(req, res) => {
 
   var password = params.password;
 
-  await User.findOne({ email: params.email.toLowerCase() }, (err, user) => {
+  await User.findOne({ email: params.email.toLowerCase() }, {rejectUnauthorized: false}, (err, user) => {
     if(err){
       res.status(500).send({message: 'Error checking the user'});
     }else{
@@ -65,12 +65,12 @@ exports.user_login = async(req, res) => {
     }
   });
   
-};
+}, {rejectUnauthorized: false};
 
 // update user information
 exports.user_update = (req, res, next) =>{
   User.updateOne({ email: req.params.user_email }, 
-    { $set: req.body }, {new:true}, function(error, data){
+    { $set: req.body }, {new:true, rejectUnauthorized: false}, function(error, data){
     if (error) {
       res.status(500).send(error);
       return next(error);
@@ -78,18 +78,18 @@ exports.user_update = (req, res, next) =>{
       res.status(200).json(data);
     }
   })
-};
+}, {rejectUnauthorized: false};
 
 // delete user
 exports.user_delete = (req, res) => {
-  User.findOneAndRemove({email: req.params.user_email}, (error, data) => {
+  User.findOneAndRemove({email: req.params.user_email}, {rejectUnauthorized: false}, (error, data) => {
     if (error) {
       res.status(500).json({ msg: error });
     } else {
       res.status(200).json({ msg: data });
     }
   }, {useFindAndModify: false})
-};
+}, {rejectUnauthorized: false};
 
 // Display list of all Users.
 exports.user_list = async (req, res) => {
@@ -99,24 +99,24 @@ exports.user_list = async (req, res) => {
   }catch(error){
     res.status(500).send({ message: 'Error in the petition' });
   }
-};
+}, {rejectUnauthorized: false};
 
 // Returns a specific object.
 exports.get_user = async (req, res) => {
   var userEmail = req.params.user_email;
   try{
-    var result = await User.findOne({email: userEmail}).exec();
+    var result = await User.findOne({email: userEmail}, {rejectUnauthorized: false}).exec();
     res.status(200).send(result);
   }catch(error){
     res.status(500).send({ message: 'Error in the petition' });
   }
-};
+}, {rejectUnauthorized: false};
 
 exports.user_update_recommend = async (req, res, next) => { // list_recommend
   User.findOneAndUpdate(
     { email : req.params.user_email },
     { $addToSet : { list_recommend: req.body } 
-    },{new: true, upsert: true, safe: true, useFindAndModify: false},function(err, result) {
+    },{new: true, upsert: true, safe: true, useFindAndModify: false, rejectUnauthorized: false},function(err, result) {
       if (err) {
         res.status(500).send(err);
       } else {
@@ -124,13 +124,13 @@ exports.user_update_recommend = async (req, res, next) => { // list_recommend
       }
     }
   ).exec();
-};
+}, {rejectUnauthorized: false};
 
 exports.user_update_removed = async (req, res, next) => { // list_removed
   User.findOneAndUpdate(
     { email : req.params.user_email },
     { $addToSet : { list_remove: req.body }
-    },{new: true, upsert: true, safe: true, useFindAndModify: false},function(err, result) {
+    },{new: true, upsert: true, safe: true, useFindAndModify: false, rejectUnauthorized: false},function(err, result) {
       if (err) {
         res.status(500).send(err);
       } else {
@@ -138,13 +138,13 @@ exports.user_update_removed = async (req, res, next) => { // list_removed
       }
     }
   ).exec();
-};
+}, {rejectUnauthorized: false};
 
 exports.user_update_assigned = async (req, res, next) => { // list_assigned
   User.findOneAndUpdate(
     { email : req.params.user_email },
     { $addToSet : { list_assign: req.body } 
-    }, {new: true, upsert: true, safe: true, useFindAndModify: false}, function(err, result) {
+    }, {new: true, upsert: true, safe: true, useFindAndModify: false, rejectUnauthorized: false}, function(err, result) {
       if (err) {
         res.status(500).send(err);
       } else {
@@ -153,17 +153,17 @@ exports.user_update_assigned = async (req, res, next) => { // list_assigned
     }
   ).exec();
 
-};
+}, {rejectUnauthorized: false};
 
 exports.user_remove_assigned = function(req, res) {
   User.findOneAndUpdate(
       {email: req.params.user_email}, 
       { $pull : { list_assign: {appId: req.body.appId} }},
-      {useFindAndModify: false}, function(err, result) {
+      {useFindAndModify: false, rejectUnauthorized: false}, function(err, result) {
         if (err) {
           res.status(500).send(err);
         } else {
           res.status(200).send(result);
         }
   }).exec();
-};
+}, {rejectUnauthorized: false};
