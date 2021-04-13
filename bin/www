@@ -17,7 +17,7 @@ var fs = require('fs');
 const options = {
   key: fs.readFileSync('bin/key.pem', 'utf8'),
   cert: fs.readFileSync('bin/cert.pem', 'utf8'),
-  ca: [fs.readFileSync(['bin/cert.pem'], {encoding: 'utf-8'})]
+  ca: fs.readFileSync('bin/cert.pem', 'utf-8')
 };
 
 /**
