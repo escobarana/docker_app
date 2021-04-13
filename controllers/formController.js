@@ -11,13 +11,13 @@ exports.getForms = async (req, res) => {
     }catch(error){
         res.status(500).send({message:'An error occurred: ', error});
     }
-}, {rejectUnauthorized: false};
+};
 
 
 exports.createForm = async (req, res) => {
     console.log("Starting POST form ...");
     // Check if this form already exists
-    let data = await Form.findOne({ form_date: req.body.form_date, email: req.body.email }, {rejectUnauthorized: false});
+    let data = await Form.findOne({ form_date: req.body.form_date, email: req.body.email });
     if (data !== null) {
         return res.status(400).send({messaeg:'Duplicated form'});
     } else {
@@ -38,4 +38,4 @@ exports.createForm = async (req, res) => {
         }
         //res.send(result);
     }
-}, {rejectUnauthorized: false};
+};
