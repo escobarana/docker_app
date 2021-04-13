@@ -10,7 +10,6 @@ var routesRouter = require('./routes/allRoutes');
 var compression = require('compression');           // to compress the routes at the end - production
 var helmet = require('helmet');                     // to protect against well known vulnerabilities - npm install helmet
 
-
 var app = express();                                // object to run the server
 app.disable('etag');
 /// view engine setup ///
