@@ -137,12 +137,10 @@ function(url=""){
   print("Eliminar apps que no interesan - 2gram")
   
   ##2gram
-  keywords_delete_bigrams <- data.frame(word = c("weight loss", "free trial", "purchase subscription",
-                                                 "weight lifting", "trial period", 
-                                                 "lose weight","confirm purchase",
-                                                 "fat burn", "belly fat", "burn workout",
-                                                 "apple watch", "heavy weight", "itune account", "slim down",
-                                                 "burn calories","high intensity", "body sculptor", "for kids"),
+  keywords_delete_bigrams <- data.frame(word = c("free trial", "purchase subscription", "trial period", 
+                                                 "confirm purchase", "fat burn", "belly fat", "burn workout",
+                                                 "apple watch",  "itune account", "slim down",
+                                                 "burn calories","high intensity", "body sculptor", "for kids"), #"weight loss", "lose weight", "heavy weight", "weight lifting",
                                         stringsAsFactors = FALSE)
   keywords_delete_bigrams <- keywords_delete_bigrams %>%
     separate(word, c("word1", "word2"), sep = " ") %>%
@@ -168,7 +166,7 @@ function(url=""){
                                         "watches", "trial", "membership", "premium",
                                         "subscription", "meditation", "purchase", "yoga", "pilates",
                                         "zen", "relax", "mind", "eat", "food", "sleep",
-                                        "tarot", "slim", "device", "reiky", "weight", "pet", "nutrition",
+                                        "tarot", "slim", "device", "reiky", "pet", "nutrition", # "weight", 
                                         "calories", "medication", "kids"))
   
   vector_apps <- c()

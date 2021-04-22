@@ -1,10 +1,14 @@
 # Start from the rocker/r-ver:3.5.0 image
 FROM rocker/r-ver:3.5.0
 
+# RUN apt install r-base-dev
+
 # Install the linux libraries needed for plumber
 RUN apt-get update && apt-get install -y \
     libssl-dev \
-    libcurl4-gnutls-dev
+    libcurl4-gnutls-dev \
+    libxml2-dev \
+    libcurl4-openssl-dev
 
 # Create directory
 RUN mkdir -p /usr/src/app

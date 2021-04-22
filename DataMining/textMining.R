@@ -102,12 +102,10 @@ tidy_text_bigram <- app_desc_bigrams
 ################## Eliminar apps que no interesan ################## 
 
 ##2gram
-keywords_delete_bigrams <- data.frame(word = c("weight loss", "free trial", "purchase subscription",
-                                        "weight lifting", "trial period", 
-                                        "lose weight","confirm purchase",
-                                        "fat burn", "belly fat", "burn workout",
+keywords_delete_bigrams <- data.frame(word = c("free trial", "purchase subscription","trial period", 
+                                        "confirm purchase","fat burn", "belly fat", "burn workout",
                                         "apple watch", "heavy weight", "itune account", "slim down",
-                                        "burn calories","high intensity", "body sculptor", "for kids"),
+                                        "burn calories","high intensity", "body sculptor", "for kids"), # "weight loss", "weight lifting", "lose weight",
                                stringsAsFactors = FALSE)
 keywords_delete_bigrams <- keywords_delete_bigrams %>%
   separate(word, c("word1", "word2"), sep = " ") %>%
@@ -148,8 +146,8 @@ keywords_delete  <- wordStem(word = c("ovulation", "fertil", "wearable", "baby",
                                       "watches", "trial", "membership", "premium",
                                       "subscription", "meditation", "purchase", "yoga", "pilates",
                                       "zen", "relax", "mind", "eat", "food", "sleep",
-                                      "tarot", "slim", "device", "reiky", "weight", "pet", "nutrition",
-                                      "calories", "medication", "kids"))
+                                      "tarot", "slim", "device", "reiky", "pet", "nutrition",
+                                      "calories", "medication", "kids")) # "weight",
 
 vector_apps <- c()
 vector_apps <- app_desc[app_desc$word_stem %in% keywords_delete, ]
