@@ -6,7 +6,6 @@ FROM rocker/r-ver:3.5.0
 # Install the linux libraries needed for plumber
 RUN apt-get update && apt-get install -y \
     libssl-dev \
-    libcurl4-gnutls-dev \
     libxml2-dev \
     libcurl4-openssl-dev
 
