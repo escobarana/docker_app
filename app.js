@@ -50,6 +50,8 @@ app.use((req, res, next) => {
   next();
 });
 
+// app.use(cors);
+
 /// Routes ///
 app.use('/', express.static('dist/client', { redirect: false }));
 app.use('/api', routesRouter); // Add users routes to middleware chain.
@@ -59,7 +61,13 @@ app.get('*', function(req, res, next){
 });
 
 
+
 /// GETTING APPS ///
+
+var http = require('http');
+var https = require('https');
+http.globalAgent.maxSockets = 1;
+https.globalAgent.maxSockets = 1;
 
 var playstore   = require('./js/apiGoogle');            // API Google Play Store
 var appStore    = require('./js/apiApple');             // API Apple Store
@@ -67,7 +75,7 @@ var r           = require('./js/apiR');                 // API R
 
 const { Console } = require('console');
 
-var port_plumber = '7190';                              // R port
+var port_plumber = '6334';                              // R port
 
 var keywords = ['physical activity', 'sedentary behaviour', 'colorectal neoplasms' ,'health exercise'];
 
@@ -125,7 +133,7 @@ app.route('/api/apps/google/keywords').get((req, res) => {
       res.send(listGoogle);
   }, function(err) {
       console.log(err);
-  })
+  }).catch(err => console.log(err))
 });
 
 app.route('/api/apps/apple/raw').get((req, res) => { 
@@ -140,7 +148,7 @@ app.route('/api/apps/apple/raw').get((req, res) => {
       console.log(err);
   }, function(err) {
     console.log(err);
-  })
+  }).catch(err => console.log(err))
 });
 
 app.route('/api/apps/apple/descriptionApps').get((req, res) => { 
@@ -158,18 +166,20 @@ app.route('/api/apps/apple/descriptionApps').get((req, res) => {
       allApps = allApps.filter(function (el) {
           return el != null;
       });
+      console.log(allApps);
       app.route('/api/bothStores').get((req, res) => { 
-          res.send(allApps);
+        console.log(allApps)
+        res.send(allApps);
       }, function(err) {
         console.log(err);
-    })
+      })
 
       console.log("allApps.length: ", allApps.length);
 
       res.send(listApple);
   }, function(err) {
       console.log(err);
-  })
+  }).catch(err => console.log(err))
 });
 
 app.route('/api/apps/apple/keywords').get((req, res) => {
@@ -196,7 +206,7 @@ app.route('/api/apps/apple/keywords').get((req, res) => {
       res.send(listApple);
   }, function(err) {
     console.log(err);
-  })
+  }).catch(err => console.log(err))
 });
 
 app.route('/api/apps/listApps').get((req, res) => {

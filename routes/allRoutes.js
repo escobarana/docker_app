@@ -28,7 +28,7 @@ router.delete('/delete/:user_email', md_auth.ensureAuth,  user_controller.user_d
 router.get('/allUsers', md_auth.ensureAuth, user_controller.user_list); 
 
 // GET request to get a user object.
-router.get('/:user_email', md_auth.ensureAuth, user_controller.get_user); 
+router.get('/:user_email', /*md_auth.ensureAuth,*/ user_controller.get_user); 
 
 // PUT request to update list_recommend apps
 router.put('/updreco/:user_email', md_auth.ensureAuth, user_controller.user_update_recommend);
@@ -49,13 +49,13 @@ router.put('/remoass/:user_email', md_auth.ensureAuth, user_controller.user_remo
 router.get('/apps/system/accept', md_auth.ensureAuth, app_controller.getSystemAccept);
 
 // POST request to add an app to system_apps_accept collection.
-router.post('/system_apps_accept', md_auth.ensureAuth, app_controller.post_system_apps_accept);
+router.post('/system_apps_accept', app_controller.post_system_apps_accept);
 
 // GET request to return removed apps.
 router.get('/apps/system/remove', md_auth.ensureAuth, app_controller.getSystemRemove);
 
 // POST request to add an app to system_apps_remove collection.
-router.post('/system_apps_remove', md_auth.ensureAuth, app_controller.post_system_apps_remove);
+router.post('/system_apps_remove', app_controller.post_system_apps_remove);
 
 // GET request to return reviewed accepted apps.
 router.get('/apps/review/accept', md_auth.ensureAuth, app_controller.getReviewAccept);
@@ -76,7 +76,7 @@ router.post('/apps_review_remove', md_auth.ensureAuth, app_controller.post_apps_
 router.delete('/delete/revrem/:app_appId', md_auth.ensureAuth, app_controller.delete_review_remove);
 
 // GET request to return final accepted apps.
-router.get('/apps/apps_accepted', md_auth.ensureAuth, app_controller.getFinalAccept);
+router.get('/apps/apps_accepted', app_controller.getFinalAccept);
 
 //  POST request to add an app to apps_accepted collection.
 router.post('/apps_accepted', md_auth.ensureAuth, app_controller.post_apps_accepted);
