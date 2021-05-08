@@ -1,7 +1,5 @@
-# Start from the rocker/r-ver:3.5.0 image
-FROM rocker/r-ver:3.5.0
-
-# RUN apt install r-base-dev
+# Base image https://hub.docker.com/u/rocker/
+FROM rocker/r-base:latest
 
 # Install the linux libraries needed for plumber
 RUN apt-get update && apt-get install -y \
