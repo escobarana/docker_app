@@ -53,12 +53,12 @@ app.use((req, res, next) => {
 // app.use(cors);
 
 /// Routes ///
-app.use('/', express.static('dist/client', { redirect: false }));
+// app.use('/', express.static('dist/client', { redirect: false }));
 app.use('/api', routesRouter); // Add users routes to middleware chain.
 
-app.get('*', function(req, res, next){
+/*app.get('*', function(req, res, next){
   res.sendFile(path.resolve('dist/client/index.html')); // Friendly and optimized URLs -- avoiding errors when refreshing the page
-});
+});*/
 
 
 
@@ -75,9 +75,9 @@ var r           = require('./js/apiR');                 // API R
 
 const { Console } = require('console');
 
-var port_plumber = '6334';                              // R port
+var port_plumber = '7190';                              // R port
 
-var keywords = ['physical activity', 'sedentary behaviour', 'colorectal neoplasms' ,'health exercise'];
+var keywords = ['exercise', 'physical activity', 'sedentary behaviour', 'colorectal neoplasms', 'health exercise'];
 
 var listGoogle = [];
 var listApple = [];
