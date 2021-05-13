@@ -206,7 +206,7 @@ app.route('/api/apps/apple/keywords').get((req, res) => {
 app.route('/api/apps/listApps/apple').get((req, res) => {
   req.setTimeout(600000);
   console.log("Sending both stores to R");
-  var url = 'http://localhost:' + port_plumber + '/dataMining?url=' + 'http:%2F%2Flocalhost:3000%2Fapi%2Fapps%2Fapple%2Fkeywords' + '&valueK=' + req.query.valueK;
+  var url = 'http://156.35.163.172:' + port_plumber + '/dataMining?url=' + 'http:%2F%2F156.35.163.172%2Fapi%2Fapps%2Fapple%2Fkeywords' + '&valueK=' + req.query.valueK;
   var p = r.getAppsFromR(url);
     p.then(values => { 
         console.log(values); 
@@ -219,7 +219,7 @@ app.route('/api/apps/listApps/apple').get((req, res) => {
 app.route('/api/apps/listApps/google').get((req, res) => {
   req.setTimeout(600000);
   console.log("Sending both stores to R");
-  var url = 'http://localhost:' + port_plumber + '/dataMining?url=' + 'http:%2F%2Flocalhost:3000%2Fapi%2Fapps%2Fgoogle%2Fkeywords' + '&valueK=' + req.query.valueK;
+  var url = 'http://156.35.163.172:' + port_plumber + '/dataMining?url=' + 'http:%2F%2F156.35.163.172%2Fapi%2Fapps%2Fgoogle%2Fkeywords' + '&valueK=' + req.query.valueK;
   var p = r.getAppsFromR(url);
     p.then(values => { 
         console.log(values); 
