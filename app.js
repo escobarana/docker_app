@@ -77,7 +77,7 @@ const { Console } = require('console');
 
 var port_plumber = '7190';                              // R port
 
-var keywords = ['exercise', 'physical activity', 'sedentary behaviour', 'colorectal neoplasms', 'health exercise'];
+// var keywords = ['exercise', 'physical activity', 'sedentary behaviour', 'colorectal neoplasms', 'health exercise']; // get them from admin input
 
 var listGoogle = [];
 var listApple = [];
@@ -116,6 +116,7 @@ app.route('/api/apps/google/keywords').get((req, res) => {
   req.setTimeout(600000);
   console.log("-----Buscando las apps con keywords - GOOGLE");
   const promises = []
+  let keywords = req.body.keywords;
   keywords.forEach(word => 
       promises.push(playstore.getFromKeyword(word)) 
   )
@@ -182,6 +183,7 @@ app.route('/api/apps/apple/keywords').get((req, res) => {
   req.setTimeout(600000);
   console.log("-----Buscando las apps con keywords - APPLE");
   const promises = []
+  let keywords = req.body.keywords;
   keywords.forEach(word => 
       promises.push(appStore.getFromKeyword(word)) 
   )

@@ -162,7 +162,15 @@ exports.delete_review_remove = async(req, res)=>{
 // Display list of final accepted apps.
 exports.getFinalAccept = async (req, res) => {
     try{
-        var result = await AppFA.find().exec();
+        var result = await AppFA.aggregate([ // avoids returning duplicated apps due to revisions done by more than one reviewer to the same app
+            { "$group": { 
+              "_id": "$appId", 
+              "doc": { "$first": "$$ROOT" }
+            }},
+            { "$replaceRoot": {
+              "newRoot": "$doc"
+            }}
+          ]);
         res.status(200).send(result);
     }catch(error){
         res.status(500).send(error);
@@ -192,7 +200,15 @@ exports.delete_final_accept = async(req, res)=>{
 // Display list of final removed apps.
 exports.getFinalRemove = async (req, res) => {
     try{
-        var result = await AppFR.find().exec();
+        var result = await AppFR.aggregate([ // avoids returning duplicated apps due to revisions done by more than one reviewer to the same app
+            { "$group": { 
+              "_id": "$appId", 
+              "doc": { "$first": "$$ROOT" }
+            }},
+            { "$replaceRoot": {
+              "newRoot": "$doc"
+            }}
+          ]);
         res.status(200).send(result);
     }catch(error){
         res.status(500).send(error);
