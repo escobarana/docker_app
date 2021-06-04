@@ -30,6 +30,9 @@ router.get('/allUsers', md_auth.ensureAuth, user_controller.user_list);
 // GET request to get a user object.
 router.get('/:user_email', /*md_auth.ensureAuth,*/ user_controller.get_user); 
 
+// GET request to get a count of user reviewed apps.
+router.get('/:user_email/reviewed', md_auth.ensureAuth, user_controller.get_user_reviewed);
+
 // PUT request to update list_recommend apps
 router.put('/updreco/:user_email', md_auth.ensureAuth, user_controller.user_update_recommend);
 
@@ -78,6 +81,9 @@ router.delete('/delete/revrem/:app_appId', md_auth.ensureAuth, app_controller.de
 // GET request to return final accepted apps.
 router.get('/apps/apps_accepted', app_controller.getFinalAccept);
 
+// GET request to get a count of apps final accepted apps.
+router.get('/apps/count_accepted', md_auth.ensureAuth, app_controller.get_count_accepted);
+
 //  POST request to add an app to apps_accepted collection.
 router.post('/apps_accepted', md_auth.ensureAuth, app_controller.post_apps_accepted);
 
@@ -86,6 +92,9 @@ router.delete('/delete/acc/:app_appId', md_auth.ensureAuth, app_controller.delet
 
 // GET request to return final removed apps.
 router.get('/apps/apps_removed', md_auth.ensureAuth, app_controller.getFinalRemove);
+
+// GET request to get a count of apps final removed apps.
+router.get('/apps/count_removed', md_auth.ensureAuth, app_controller.get_count_removed);
 
 //  POST request to add an app to apps_removed collection.
 router.post('/apps_removed', md_auth.ensureAuth, app_controller.post_apps_removed);

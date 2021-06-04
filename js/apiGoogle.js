@@ -59,7 +59,7 @@ module.exports = {
         return new Promise(function(resolve, reject) {
             var witout_desc = []; //para que ninguna app quede con description = undefined
             all_values.forEach((app) => {
-                if(app !== undefined){
+                if(!(app === undefined)){
                     if(app.description === undefined){
                         witout_desc.push(app);
                     }

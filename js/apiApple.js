@@ -49,22 +49,28 @@ module.exports = {
                                 return element.free !== false && element.genre === 'Health & Fitness'; //quita los que no sean apps gratis
                             });
                             var all_values = values_free_ipad;
-                            values_free_ios.forEach(p => 
-                                all_values.push(p) 
-                            )
-                            values_free_top_ios.forEach(p => 
-                                all_values.push(p) 
-                            )
-                            values_apps.forEach(p => 
-                                all_values.push(p) 
-                            )
+                            values_free_ios.forEach((p) => {
+                                if(p !== undefined){
+                                    all_values.push(p) 
+                                } 
+                            })
+                            values_free_top_ios.forEach((p) => {
+                                if(p !== undefined){
+                                    all_values.push(p) 
+                                } 
+                            })
+                            values_apps.forEach((p) => {
+                                if(p !== undefined){
+                                    all_values.push(p) 
+                                } 
+                            })
                             all_values = all_values.filter((arr, index, self) => //elimina los duplicados
                                 index === self.findIndex((t) => (t.appId === arr.appId)));
                             resolve(all_values);
-                        }).catch(error => console.log(`Error in executing ${error}`));
-                    }).catch(error => console.log(`Error in executing ${error}`));
-                }).catch(error => console.log(`Error in executing ${error}`));
-            }).catch(error => console.log(`Error in executing ${error}`));
+                        }).catch(console.log);
+                    }).catch(console.log);
+                }).catch(console.log);
+            }).catch(console.log);
         })
     },
     searchByKeywords: function (keywords) {
@@ -104,14 +110,14 @@ module.exports = {
                     console.log("not resolved");
                     resolve();
                 }
-            }).catch(error => console.log(`Error in executing ${error}`));
+            }).catch(console.log);
         });
     },
     getDescriptions: function(all_values){
         return new Promise(function(resolve, reject) {
-            var witout_desc = []; //para que ninguna app quede con description = undefined
+            var witout_desc = []; // para que ninguna app quede con description = undefined
             all_values.forEach((app) => {
-                if(app !== undefined){
+                if(!(app === undefined)){
                     if(app.description === undefined){
                         witout_desc.push(app);
                     }
@@ -124,7 +130,7 @@ module.exports = {
                     }, function(error) {
                         return Promise.reject(error);
                     });
-                }catch(err){console.log(err);}
+                }catch(err){}
                  
             })).then((response) => { 
                 response.forEach( resp => {
@@ -154,7 +160,7 @@ module.exports = {
                         return element.free !== false && element.primaryGenre === 'Health & Fitness'; //quita los que no sean apps gratis
                     });
                     resolve(search_values);
-                }).catch(error => console.log(`Error in executing ${error}`))
+                }).catch(console.log)
         });
     }
     
@@ -174,7 +180,7 @@ function getFromKeyword (word) {
                 });
                 console.log("word apple: " + word);
                 resolve(search_values);
-            }).catch(error => console.log(`Error in executing ${error}`))
+            }).catch(console.log)
     });
 }
 

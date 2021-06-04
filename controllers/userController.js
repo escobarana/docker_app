@@ -112,6 +112,28 @@ exports.get_user = async (req, res) => {
   }
 };
 
+// Returns the count of reviewed to recommend apps from a user.
+exports.get_user_reviewed = async (req, res) => {
+  var userEmail = req.params.user_email;
+  try{
+    var result = await User.aggregate([
+                                        { 
+                                          $match : { "email" : userEmail }
+                                        },
+                                        {
+                                            $project: {
+                                                _id:0,
+                                                recommend_count:  { $size: "$list_recommend" },
+                                                remove_count:     { $size: "$list_remove" }
+                                            }
+                                        }
+                                    ])
+    res.status(200).send(result);
+  }catch(error){
+    res.status(500).send({ message: 'Error in the petition' });
+  }
+};
+
 exports.user_update_recommend = async (req, res, next) => { // list_recommend
   User.findOneAndUpdate(
     { email : req.params.user_email },

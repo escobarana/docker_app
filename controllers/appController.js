@@ -177,6 +177,17 @@ exports.getFinalAccept = async (req, res) => {
     }
 };
 
+exports.get_count_accepted = async (req, res) => {
+    try{
+        var result = await AppFA.aggregate( [
+            { $count: "count" }
+         ])
+        res.status(200).send(result);
+    }catch(error){
+        res.status(500).send(error);
+    }
+};
+
 exports.post_apps_accepted = async (req, res) => {
     try{
         app = new AppFA(req.body);
@@ -209,6 +220,17 @@ exports.getFinalRemove = async (req, res) => {
               "newRoot": "$doc"
             }}
           ]);
+        res.status(200).send(result);
+    }catch(error){
+        res.status(500).send(error);
+    }
+};
+
+exports.get_count_removed = async (req, res) => {
+    try{
+        var result = await AppFR.aggregate( [
+            { $count: "count" }
+         ])
         res.status(200).send(result);
     }catch(error){
         res.status(500).send(error);

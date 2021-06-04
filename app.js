@@ -77,7 +77,7 @@ const { Console } = require('console');
 
 var port_plumber = '7190';                              // R port
 
-// var keywords = ['exercise', 'physical activity', 'sedentary behaviour', 'colorectal neoplasms', 'health exercise']; // get them from admin input
+var keywords = ['physical activity', 'sedentary behaviour', 'colorectal neoplasms', 'health exercise']; // get them from admin input
 
 var listGoogle = [];
 var listApple = [];
@@ -112,11 +112,13 @@ app.route('/api/apps/google/descriptionApps').get((req, res) => {
   })
 });
 
-app.route('/api/apps/google/keywords').get((req, res) => { 
+app.route('/api/apps/google/keywords/:keywords').get((req, res) => { 
   req.setTimeout(600000);
   console.log("-----Buscando las apps con keywords - GOOGLE");
   const promises = []
-  let keywords = req.body.keywords;
+  let keyword = req.params.keywords;
+  keywords.push(keyword);
+  console.log(keywords)
   keywords.forEach(word => 
       promises.push(playstore.getFromKeyword(word)) 
   )
@@ -141,6 +143,7 @@ app.route('/api/apps/google/keywords').get((req, res) => {
 app.route('/api/apps/apple/raw').get((req, res) => { 
   req.setTimeout(600000);
   var appsApple = appStore.getApps();
+  console.log(appsApple)
   console.log("-----Buscando las apps - APPLE");
   appsApple.then(function(result_apps) {
       console.log("-----Hechas las apps - APPLE");
@@ -221,7 +224,7 @@ app.route('/api/apps/listApps/apple').get((req, res) => {
 app.route('/api/apps/listApps/google').get((req, res) => {
   req.setTimeout(600000);
   console.log("Sending both stores to R");
-  var url = 'http://156.35.163.172:' + port_plumber + '/dataMining?url=' + 'http:%2F%2F156.35.163.172%2Fapi%2Fapps%2Fgoogle%2Fkeywords' + '&valueK=' + req.query.valueK;
+  var url = 'http://156.35.163.172:' + port_plumber + '/dataMining?url=' + 'http:%2F%2F156.35.163.172%2Fapi%2Fapps%2Fgoogle%2Fraw' + '&valueK=' + req.query.valueK;
   var p = r.getAppsFromR(url);
     p.then(values => { 
         console.log(values); 
