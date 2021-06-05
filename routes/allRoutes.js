@@ -81,8 +81,11 @@ router.delete('/delete/revrem/:app_appId', md_auth.ensureAuth, app_controller.de
 // GET request to return final accepted apps.
 router.get('/apps/apps_accepted', app_controller.getFinalAccept);
 
-// GET request to get a count of apps final accepted apps.
-router.get('/apps/count_accepted', md_auth.ensureAuth, app_controller.get_count_accepted);
+// GET request to get a count of apps final accepted apps IOS.
+router.get('/apps/count_accepted/ios', md_auth.ensureAuth, app_controller.get_count_accepted_ios);
+
+// GET request to get a count of apps final accepted apps Android.
+router.get('/apps/count_accepted/android', md_auth.ensureAuth, app_controller.get_count_accepted_android);
 
 //  POST request to add an app to apps_accepted collection.
 router.post('/apps_accepted', md_auth.ensureAuth, app_controller.post_apps_accepted);
@@ -93,8 +96,11 @@ router.delete('/delete/acc/:app_appId', md_auth.ensureAuth, app_controller.delet
 // GET request to return final removed apps.
 router.get('/apps/apps_removed', md_auth.ensureAuth, app_controller.getFinalRemove);
 
-// GET request to get a count of apps final removed apps.
-router.get('/apps/count_removed', md_auth.ensureAuth, app_controller.get_count_removed);
+// GET request to get a count of apps final removed apps IOS.
+router.get('/apps/count_removed/ios', md_auth.ensureAuth, app_controller.get_count_removed_ios);
+
+// GET request to get a count of apps final removed apps Android.
+router.get('/apps/count_removed/android', md_auth.ensureAuth, app_controller.get_count_removed_android);
 
 //  POST request to add an app to apps_removed collection.
 router.post('/apps_removed', md_auth.ensureAuth, app_controller.post_apps_removed);

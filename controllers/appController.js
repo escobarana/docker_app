@@ -177,9 +177,22 @@ exports.getFinalAccept = async (req, res) => {
     }
 };
 
-exports.get_count_accepted = async (req, res) => {
+exports.get_count_accepted_ios = async (req, res) => {
     try{
-        var result = await AppFA.aggregate( [
+        var result = await AppFA.aggregate( [ 
+            { $match: {'url': {$regex : ".*apple.*"}} },
+            { $count: "count" }
+         ])
+        res.status(200).send(result);
+    }catch(error){
+        res.status(500).send(error);
+    }
+};
+
+exports.get_count_accepted_android = async (req, res) => {
+    try{
+        var result = await AppFA.aggregate( [ 
+            { $match: {'url': {$regex : ".*google.*"}} },
             { $count: "count" }
          ])
         res.status(200).send(result);
@@ -226,9 +239,22 @@ exports.getFinalRemove = async (req, res) => {
     }
 };
 
-exports.get_count_removed = async (req, res) => {
+exports.get_count_removed_ios = async (req, res) => {
     try{
         var result = await AppFR.aggregate( [
+            { $match: {'url': {$regex : ".*apple.*"}} },
+            { $count: "count" }
+         ])
+        res.status(200).send(result);
+    }catch(error){
+        res.status(500).send(error);
+    }
+};
+
+exports.get_count_removed_android = async (req, res) => {
+    try{
+        var result = await AppFR.aggregate( [
+            { $match: {'url': {$regex : ".*google.*"}} },
             { $count: "count" }
          ])
         res.status(200).send(result);
