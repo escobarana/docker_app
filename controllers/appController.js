@@ -17,6 +17,17 @@ exports.getSystemAccept = async (req, res) => {
     }
 };
 
+exports.get_count_accepted_system = async (req, res) => {
+    try{
+        var result = await AppSA.aggregate([
+            { $count: "count" }
+         ])
+        res.status(200).send(result);
+    }catch(error){
+        res.status(500).send(error);
+    }
+};
+
 exports.post_system_apps_accept = async (req, res) => {
     try{
         let exist = AppSA.findOne({appId: req.body.appId}).exec();
@@ -48,6 +59,17 @@ exports.post_system_apps_accept = async (req, res) => {
 exports.getSystemRemove = async (req, res) => {
     try{
         var result = await AppSR.find().exec();
+        res.status(200).send(result);
+    }catch(error){
+        res.status(500).send(error);
+    }
+};
+
+exports.get_count_remove_system = async (req, res) => {
+    try{
+        var result = await AppSR.aggregate([
+            { $count: "count" }
+         ])
         res.status(200).send(result);
     }catch(error){
         res.status(500).send(error);

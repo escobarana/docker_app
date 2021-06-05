@@ -51,11 +51,17 @@ router.put('/remoass/:user_email', md_auth.ensureAuth, user_controller.user_remo
 // GET request to return accepted apps.
 router.get('/apps/system/accept', md_auth.ensureAuth, app_controller.getSystemAccept);
 
+// GET request to get a count of apps to recommend.
+router.get('/apps/count_accepted/system', md_auth.ensureAuth, app_controller.get_count_accepted_system);
+
 // POST request to add an app to system_apps_accept collection.
 router.post('/system_apps_accept', app_controller.post_system_apps_accept);
 
 // GET request to return removed apps.
 router.get('/apps/system/remove', md_auth.ensureAuth, app_controller.getSystemRemove);
+
+// GET request to get a count of apps to remove.
+router.get('/apps/count_remove/system', md_auth.ensureAuth, app_controller.get_count_remove_system);
 
 // POST request to add an app to system_apps_remove collection.
 router.post('/system_apps_remove', app_controller.post_system_apps_remove);
