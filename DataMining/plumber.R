@@ -4,18 +4,13 @@ options(java.parameters = c("-XX:+UseConcMarkSweepGC", "-Xmx8192m"))
 install.packages("rjson")
 install.packages("jsonlite")
 install.packages("tm")
-# install.packages("ggplot2")
 install.packages("tidyr")
-# install.packages("topicmodels")
 install.packages("widyr")
 install.packages("tidytext")
 install.packages("dplyr")
 install.packages("SnowballC")
 install.packages("stringr")
-# install.packages("factoextra")
-# install.packages("cluster")
 install.packages("textclean")
-# install.packages("qdap")
 install.packages("tidyverse")
 install.packages("textcat")
 
@@ -24,18 +19,13 @@ library(rjson)
 library(jsonlite)
 library(tidyverse)
 library(tm)
-#library(ggplot2)
 library(tidyr)
-#library(topicmodels)
 library(widyr)
 library(tidytext)
 library(dplyr)
 library(SnowballC)
 library(stringr)
-#library("factoextra")
-#library(cluster)
 library(textclean)
-#library(qdap)
 library("textcat")
 
 
@@ -78,7 +68,7 @@ function(url=""){
     x[sapply(x, is.null)] <- NA
     unlist(x)
   })
-  do.call("rbind", json_file)
+  # do.call("rbind", json_file)
   
   app_desc <- tibble(appId = json_file$appId,desc = json_file$description)
   tidy_data_frame <- app_desc
@@ -142,11 +132,10 @@ function(url=""){
   
   ##2gram
   keywords_delete_bigrams <- data.frame(word = c("weight loss", "free trial", "purchase subscription",
-                                                 "weight lifting", "trial period", 
-                                                 "lose weight","confirm purchase",
+                                                 "trial period", "lose weight","confirm purchase",
                                                  "fat burn", "belly fat", "burn workout",
-                                                 "apple watch", "heavy weight", "itune account", "slim down",
-                                                 "burn calories","high intensity", "body sculptor", "for kids"),
+                                                 "apple watch", "itune account", "slim down",
+                                                 "high intensity", "for kids"),
                                         stringsAsFactors = FALSE)
   keywords_delete_bigrams <- keywords_delete_bigrams %>%
     separate(word, c("word1", "word2"), sep = " ") %>%
@@ -168,12 +157,12 @@ function(url=""){
   
   ##1gram
   keywords_delete  <- wordStem(word = c("ovulation", "fertil", "wearable", "baby", "pregnancy",
-                                        "hypnosis", "longevity", "abs", "heavy",
+                                        "hypnosis", "longevity", "abs",
                                         "watches", "trial", "membership", "premium",
                                         "subscription", "meditation", "purchase", "yoga", "pilates",
                                         "zen", "relax", "mind", "eat", "food", "sleep",
-                                        "tarot", "slim", "device", "reiky", "weight", "pet", "nutrition",
-                                        "calories", "medication", "kids"))
+                                        "tarot", "slim", "device", "reiky", "pet", "nutrition",
+                                        "medication", "kids"))
   
   vector_apps <- c()
   vector_apps <- app_desc[app_desc$word_stem %in% keywords_delete, ]
@@ -185,82 +174,18 @@ function(url=""){
   app_desc <- app_desc[!is.na(app_desc$appId),] 
   app_desc_bigrams <- app_desc_bigrams[!is.na(app_desc_bigrams$appId),] 
   
-  toDelete <- vector_apps[!vector_apps%in%vector_apps_bigram]
+  toDelete <- vector_apps[!vector_apps %in% vector_apps_bigram]
   
   toAccept_1gram <- app_desc %>% distinct(appId)
   toAccept_2gram <- app_desc_bigrams %>% distinct(appId)
   
-  toAccept <- toAccept_1gram[!toAccept_1gram%in%toAccept_2gram]
+  toAccept <- toAccept_1gram[!toAccept_1gram %in% toAccept_2gram]
   
-  listToApp <- list(as.vector(unlist(toAccept)),as.vector(unlist(toDelete)))
+  listToApp <- list(as.vector(unlist(toAccept)), as.vector(unlist(toDelete)))
   names(listToApp) <- c("accept", "delete")
   
   print("Hecho")
   
   listToApp
   
-  
-  # ################## Creo el Summarized Text ################## 
-  # 
-  # print("Creo el Summarized Text")
-  # 
-  # ## 1gram
-  # word_counts <- app_desc %>%
-  #   count(appId, word_stem, sort = TRUE) %>%
-  #   ungroup()
-  # 
-  # ## 2gram
-  # word_counts_bigram <- app_desc_bigrams %>%
-  #   count(appId, word_stem, sort = TRUE) %>%
-  #   ungroup()
-  # 
-  # ## 1gram y 2gram
-  # all_word_counts <- rbind(word_counts,word_counts_bigram)
-  # 
-  # ################## Creo el DocumentTermMatrix ################## 
-  # 
-  # print("Creo el DocumentTermMatrix")
-  # 
-  # ## 1gram
-  # desc_dtm <- word_counts %>%
-  #   cast_dtm(appId, word_stem, n)
-  # 
-  # ## 2gram
-  # desc_bigram_dtm <- word_counts_bigram %>%
-  #   cast_dtm(appId, word_stem, n)
-  # 
-  # ## 1gram y 2gram
-  # all_dtm <- all_word_counts %>%
-  #   cast_dtm(appId, word_stem, n)
-  # 
-  # ################## Modelo LDA ################## 
-  # 
-  # valK <- as.numeric(valueK)
-  # 
-  # desc_lda <- LDA(desc_dtm, k = valK, control = list(seed = 1234))
-  # desc_bigram_lda <- LDA(desc_bigram_dtm, k = valK, control = list(seed = 1234))
-  # both_lda <- LDA(all_dtm, k = valK, control = list(seed = 1234))
-  # 
-  # tidied_model_documents <- tidy(desc_lda, matrix = "gamma")
-  # bigram_tidied_model_documents <- tidy(desc_bigram_lda, matrix = "gamma")
-  # both_tidied_model_documents <- tidy(both_lda, matrix = "gamma")
-  # 
-  # selectedApps <- 
-  #   tidied_model_documents[tidied_model_documents$gamma > 0.7, ]
-  # colnames(selectedApps)[1] <- "appId"
-  # 
-  # selectedApps2 <- 
-  #   tidied_model_documents[tidied_model_documents$gamma > 0.0, ]
-  # colnames(selectedApps2)[1] <- "appId"
-  # 
-  # print("FIN")
-  # 
-  # end.time <- Sys.time()
-  # time.taken <- end.time - start.time
-  # print(time.taken)
-  # selectedApps
-  # 
-  # 
-  # ###################################################################################
-  # ###################################################################################
 }

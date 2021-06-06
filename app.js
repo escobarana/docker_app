@@ -53,12 +53,12 @@ app.use((req, res, next) => {
 // app.use(cors);
 
 /// Routes ///
-app.use('/', express.static('dist/client', { redirect: false }));
+//app.use('/', express.static('dist/client', { redirect: false }));
 app.use('/api', routesRouter); // Add users routes to middleware chain.
 
-app.get('*', function(req, res, next){
+/*app.get('*', function(req, res, next){
   res.sendFile(path.resolve('dist/client/index.html')); // Friendly and optimized URLs -- avoiding errors when refreshing the page
-});
+});*/
 
 
 
@@ -118,7 +118,7 @@ app.route('/api/apps/google/keywords/:keywords').get((req, res) => {
   const promises = []
   let keyword = req.params.keywords;
   keywords.push(keyword);
-  console.log(keywords)
+  //console.log(keywords)
   keywords.forEach(word => 
       promises.push(playstore.getFromKeyword(word)) 
   )
@@ -173,20 +173,23 @@ app.route('/api/apps/apple/descriptionApps').get((req, res) => {
   }).catch(error => console.log(`Error in executing ${error}`))
 });
 
-app.route('/api/bothStores').get((req, res) => { 
+app.route('/api/apps/bothStores').get((req, res) => { 
   req.setTimeout(600000);
   console.log("----- Concatenando listas de apps ... ");
-  allApps = listApple.concat(listGoogle);
-  console.log(allApps)
-  console.log("allApps.length: ", allApps.length);
-  res.send(allApps);
+  allApps = listApple.concat(listGoogle)
+
+  console.log("TAMAÑO TOTAL APPS: " + allApps.length);
+
+  res.send(allApps)
+
 });
 
-app.route('/api/apps/apple/keywords').get((req, res) => {
+app.route('/api/apps/apple/keywords/:keywords').get((req, res) => {
   req.setTimeout(600000);
   console.log("-----Buscando las apps con keywords - APPLE");
   const promises = []
-  let keywords = req.body.keywords;
+  let keyword = req.params.keywords;
+  keywords.push(keyword);
   keywords.forEach(word => 
       promises.push(appStore.getFromKeyword(word)) 
   )
@@ -206,6 +209,32 @@ app.route('/api/apps/apple/keywords').get((req, res) => {
           index === self.findIndex((t) => (t.appId === arr.appId)));
       res.send(listApple);
   }).catch(error => console.log(`Error in executing ${error}`))
+});
+
+app.route('/api/apps/listApps').get((req, res) => {
+  req.setTimeout(600000);
+  console.log("Sending both stores to R");
+  var url = 'http://156.35.163.172:' + port_plumber + '/dataMining?url=' + 'http:%2F%2F156.35.163.172%2Fapi%2FbothStores' + '&valueK=' + req.query.valueK;
+  var p = r.getAppsFromR(url);
+    p.then(values => { 
+        console.log(values); 
+        res.send(values);
+    }).catch(function () {
+        console.log("Promise Rejected");
+    });
+});
+
+/*app.route('/api/apps/listApps').get((req, res) => {
+  console.log("Sending both stores to R");
+  var url = 'http://localhost:' + port_plumber + '/dataMining?url=' + 'http:%2F%2Flocalhost:3000%2Fapi%2Fapps%2FbothStores' + '&valueK=' + req.query.valueK;
+  var p = r.getAppsFromR(url);
+  p.then(values => { 
+      console.log(values); 
+      res.send(values);
+  });
+  p.catch(function () {
+      console.log("Promise Rejected");
+  });
 });
 
 app.route('/api/apps/listApps/apple').get((req, res) => {
@@ -232,7 +261,7 @@ app.route('/api/apps/listApps/google').get((req, res) => {
     }).catch(function () {
         console.log("Promise Rejected");
     });
-});
+});*/
 
 /// END GETTING APPS ///
 
