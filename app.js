@@ -90,7 +90,7 @@ app.route('/api/apps/google/raw').get((req, res) => {
   appsGoogle.then(function(result_apps_google) {
       console.log("-----Hechas las apps - GOOGLE");
       listGoogle = result_apps_google;
-      res.send(listGoogle);
+      res.status(200).send(listGoogle);
   }, function(err) {
       console.log(err);
   })
@@ -106,7 +106,7 @@ app.route('/api/apps/google/descriptionApps').get((req, res) => {
       listGoogle = listGoogle.filter((arr, index, self) => // Delete duplicates
       index === self.findIndex((t) => (t.appId === arr.appId)));
       console.log("TAMAÑO GOOGLE: " + listGoogle.length);
-      res.send(listGoogle);
+      res.status(200).send(listGoogle);
   }, function(err) {
       console.log(err);
   })
@@ -134,7 +134,7 @@ app.route('/api/apps/google/keywords/:keywords').get((req, res) => {
       applications.forEach(p => 
           listGoogle.push(p) 
       )
-      res.send(listGoogle);
+      res.status(200).send(listGoogle);
   }, function(err) {
       console.log(err);
   }).catch(error => console.log(`Error in executing ${error}`))
@@ -148,7 +148,7 @@ app.route('/api/apps/apple/raw').get((req, res) => {
   appsApple.then(function(result_apps) {
       console.log("-----Hechas las apps - APPLE");
       listApple = result_apps;
-      res.send(listApple);
+      res.status(200).send(listApple);
   }, function(err) {
       console.log(err);
   }, function(err) {
@@ -167,7 +167,7 @@ app.route('/api/apps/apple/descriptionApps').get((req, res) => {
           index === self.findIndex((t) => (t.appId === arr.appId)));
       console.log("TAMAÑO APPLE: " + listApple.length);
 
-      res.send(listApple);
+      res.status(200).send(listApple);
   }, function(err) {
       console.log(err);
   }).catch(error => console.log(`Error in executing ${error}`))
@@ -180,7 +180,7 @@ app.route('/api/apps/bothStores').get((req, res) => {
 
   console.log("TAMAÑO TOTAL APPS: " + allApps.length);
 
-  res.send(allApps)
+  res.status(200).send(allApps)
 
 });
 
@@ -207,7 +207,7 @@ app.route('/api/apps/apple/keywords/:keywords').get((req, res) => {
       )
       listApple = listApple.filter((arr, index, self) => // Delete duplicates
           index === self.findIndex((t) => (t.appId === arr.appId)));
-      res.send(listApple);
+          res.status(200).send(listApple);
   }).catch(error => console.log(`Error in executing ${error}`))
 });
 
@@ -218,7 +218,7 @@ app.route('/api/apps/listApps').get((req, res) => {
   var p = r.getAppsFromR(url);
     p.then(values => { 
         console.log(values); 
-        res.send(values);
+        res.status(200).send(values);
     }).catch(function () {
         console.log("Promise Rejected");
     });

@@ -6,7 +6,8 @@
   "main": "app.js",
   "author": "Aida Maria Gonzalez Fernandez, Ana Escobar Llamazares",
   "scripts": {
-    "start": "node --max-http-header-size=327680 ./bin/www"
+    "start": "node --max-http-header-size=327680 ./bin/www",
+    "test": "mocha --require @babel/register ./tests/*.js --exit"
   },
   "dependencies": {
     "app-store-scraper": "^0.16.3",
@@ -40,6 +41,14 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "@babel/node": "^7.14.2",
+    "@babel/preset-env": "^7.14.4",
+    "@babel/register": "^7.13.16",
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.4.0",
     "nodemon": "^2.0.7"
   }
 }

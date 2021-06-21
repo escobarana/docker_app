@@ -129,7 +129,7 @@ function(url=""){
   ################## Eliminar apps que no interesan ##################
   
   print("Eliminar apps que no interesan - 2gram")
-  
+
   ##2gram
   keywords_delete_bigrams <- data.frame(word = c("weight loss", "free trial", "purchase subscription",
                                                  "trial period", "lose weight","confirm purchase",
@@ -156,6 +156,11 @@ function(url=""){
   print("Eliminar apps que no interesan - 1gram")
   
   ##1gram
+
+  ## From decision tree analysis:
+  # If the description contains 'routine' -> accept otherwise delete
+  keyword_accept <- "routine"
+
   keywords_delete  <- wordStem(word = c("ovulation", "fertil", "wearable", "baby", "pregnancy",
                                         "hypnosis", "longevity", "abs",
                                         "watches", "trial", "membership", "premium",
@@ -166,9 +171,19 @@ function(url=""){
   
   vector_apps <- c()
   vector_apps <- app_desc[app_desc$word_stem %in% keywords_delete, ]
+
+  ## From decision tree analysis:
+  # If the description contains 'routine' -> accept otherwise delete
+  vector_apps <- app_desc[!app_desc$word_stem %in% keyword_accept, ]
+  
   vector_apps <- unique( vector_apps$appId )
   
   app_desc <- app_desc[!app_desc$appId %in% vector_apps,]
+
+  ## From decision tree analysis:
+  # If the description contains 'routine' -> accept otherwise delete
+  app_desc <- app_desc[app_desc$word_stem %in% vector_apps, ]
+
   app_desc_bigrams <- app_desc_bigrams[!app_desc_bigrams$appId %in% vector_apps,]
   
   app_desc <- app_desc[!is.na(app_desc$appId),] 
@@ -182,6 +197,7 @@ function(url=""){
   toAccept <- toAccept_1gram[!toAccept_1gram %in% toAccept_2gram]
   
   listToApp <- list(as.vector(unlist(toAccept)), as.vector(unlist(toDelete)))
+
   names(listToApp) <- c("accept", "delete")
   
   print("Hecho")
