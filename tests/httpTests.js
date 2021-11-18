@@ -2,7 +2,6 @@ import chai from 'chai';
 import {expect} from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
-import { deleteOne } from '../models/user';
 
 chai.use(chaiHttp);
 chai.should();
@@ -320,19 +319,6 @@ describe('Http Index', () => {
                 })
             });
         });
-
-        // RStudio
-        /*describe('GET /api/apps/listApps', () => {
-            it('Must return status 200', () => {
-                return chai.request(app)
-                    .get('/api/apps/listApps')
-                    .then((res) => {
-                        res.should.have.status(200);
-                    }, (err) => {
-                        Promise.reject();
-                    })
-            })
-        });*/
     });
 });
 

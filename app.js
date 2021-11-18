@@ -112,12 +112,12 @@ app.route('/api/apps/google/descriptionApps').get((req, res) => {
   })
 });
 
-app.route('/api/apps/google/keywords/:keywords').get((req, res) => { 
+app.route('/api/apps/google/keywords').get((req, res) => { 
   req.setTimeout(600000);
   console.log("-----Buscando las apps con keywords - GOOGLE");
   const promises = []
-  let keyword = req.params.keywords;
-  keywords.push(keyword);
+  // let keyword = keywords;
+  // keywords.push(keyword);
   //console.log(keywords)
   keywords.forEach(word => 
       promises.push(playstore.getFromKeyword(word)) 
@@ -184,12 +184,12 @@ app.route('/api/apps/bothStores').get((req, res) => {
 
 });
 
-app.route('/api/apps/apple/keywords/:keywords').get((req, res) => {
+app.route('/api/apps/apple/keywords').get((req, res) => {
   req.setTimeout(600000);
   console.log("-----Buscando las apps con keywords - APPLE");
   const promises = []
-  let keyword = req.params.keywords;
-  keywords.push(keyword);
+  // let keyword = keywords;
+  // keywords.push(keyword);
   keywords.forEach(word => 
       promises.push(appStore.getFromKeyword(word)) 
   )
